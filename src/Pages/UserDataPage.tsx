@@ -1,9 +1,6 @@
 import React from "react";
-import * as yup from "yup";
-import { Formik, Form, Field } from "formik";
-import { TextFormField } from "./TextFormField";
-import { SelectFormField } from "SelectFormField";
-import { CheckboxFormField } from "CheckboxFormField";
+import { Field } from "formik";
+import { TextFormField } from "../FormFields/TextFormField";
 
 const UserDataPage: React.FC = () => {
   return (

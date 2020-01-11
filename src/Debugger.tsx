@@ -31,7 +31,7 @@ const Debugger: React.FC = () => {
         {({ validationSchema, validate, ...rest }) => (
           <pre
             style={{
-              fontSize: ".65rem",
+              fontSize: "1rem",
               padding: ".25rem .5rem",
               overflowX: "scroll"
             }}

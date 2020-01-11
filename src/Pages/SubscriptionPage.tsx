@@ -1,23 +1,13 @@
 import React from "react";
-import * as yup from "yup";
-import { Formik, Form, Field } from "formik";
-import { TextFormField } from "./TextFormField";
-import { SelectFormField } from "SelectFormField";
-import { CheckboxFormField } from "CheckboxFormField";
+import { Field } from "formik";
+import { SelectFormField } from "FormFields/SelectFormField";
+import { CheckboxFormField } from "FormFields/CheckboxFormField";
 
 const storageSizingOptions = [3, 5, 20, 50] as const;
-const toStorageSizingLabel = (size: number) => `${size}gb`;
+const toStorageSizingLabel = (size: number) => `${size} gb`;
 
 const subscriptionDurationOptions = [3, 6, 12];
 const toSubscriptionDurationLabel = (duration: number) => `${duration} months`;
-
-const schema = yup.object({
-  username: yup
-    .string()
-    .required()
-    .min(3),
-  email: yup.string().email()
-});
 
 const SubscriptionPage: React.FC = () => {
   return (
@@ -37,7 +27,7 @@ const SubscriptionPage: React.FC = () => {
           value
         }))}
         label="Capacity (gb)"
-        name="sizing"
+        name="amount"
         component={SelectFormField}
       />
       <Field
