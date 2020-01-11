@@ -9,6 +9,7 @@ import {
   ListItemText,
   Grid
 } from "@material-ui/core";
+import format from "date-fns/format";
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -21,6 +22,20 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2)
   }
 }));
+
+const addresses = [
+  "1 Material-UI Drive",
+  "Reactville",
+  "Anytown",
+  "99999",
+  "USA"
+];
+const payments = [
+  { name: "Card type", detail: "Visa" },
+  { name: "Card holder", detail: "Mr John Smith" },
+  { name: "Card number", detail: "xxxx-xxxx-xxxx-1234" },
+  { name: "Expiry date", detail: "04/2024" }
+];
 
 const monthlyStoragePriceGB = 2;
 
@@ -41,7 +56,8 @@ const ConfirmationPage: React.FC = () => {
             CVV,
             cardNumber,
             expDate
-          }
+          },
+          ...rest
         }) => {
           const price = duration * amount * monthlyStoragePriceGB;
           const discount = upfront ? price / 10 : 0;
@@ -114,13 +130,20 @@ const ConfirmationPage: React.FC = () => {
                   <Grid container>
                     <React.Fragment key="payment">
                       <Grid item xs={6}>
+                        <Typography gutterBottom>
+                          Credit card number:
+                        </Typography>
                         <Typography gutterBottom>{cardNumber}</Typography>
                       </Grid>
                       <Grid item xs={6}>
+                        <Typography gutterBottom>Security code:</Typography>
                         <Typography gutterBottom>{CVV}</Typography>
                       </Grid>
                       <Grid item xs={6}>
-                        <Typography gutterBottom>{expDate}</Typography>
+                        <Typography gutterBottom>Expiration Date:</Typography>
+                        <Typography gutterBottom>
+                          {format(expDate, "MM/yy")}
+                        </Typography>
                       </Grid>
                     </React.Fragment>
                   </Grid>
