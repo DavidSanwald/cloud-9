@@ -1,13 +1,9 @@
 import React from "react";
 import { CloudForm } from "CloudForm";
-import { BrowserRouter, Route } from "react-router-dom";
+import { postData } from "api";
 
 const App: React.FC = () => {
-  return (
-    <BrowserRouter>
-      <Route path="/" component={CloudForm} />
-    </BrowserRouter>
-  );
+  return <CloudForm sendData={postData} />;
 };
 
 export default App;

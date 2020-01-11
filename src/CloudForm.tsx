@@ -157,7 +157,11 @@ function clamp(num: number, lower: number, upper: number) {
   return Math.max(lower, Math.min(upper, num));
 }
 
-const CloudForm: React.FC = () => {
+type Props = {
+  sendData: Function;
+};
+
+const CloudForm: React.FC<Props> = ({ sendData }) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
 
@@ -189,7 +193,8 @@ const CloudForm: React.FC = () => {
               if (activeStep < 3) {
                 setActiveStep(prevStep => clamp(prevStep + 1, 0, 3));
               } else {
-                console.log("sumbitting: ", values);
+                const data = sendData(values);
+                console.log(data);
               }
             }}
           >
