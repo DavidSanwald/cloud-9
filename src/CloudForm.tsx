@@ -7,17 +7,9 @@ import { SubscriptionPage } from "Pages/SubscriptionPage";
 // import { Debugger } from "Debugger";
 import { UserDataPage } from "Pages/UserDataPage";
 import { CreditDataPage } from "Pages/CreditDataPage";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Paper,
-  Stepper,
-  Step,
-  StepLabel,
-  Button
-} from "@material-ui/core";
+import { Typography, Paper, Button } from "@material-ui/core";
 import { ConfirmationPage } from "Pages/ConfirmationPage";
+import { FormStepper } from "FormStepper";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -42,9 +34,6 @@ const useStyles = makeStyles(theme => ({
       marginBottom: theme.spacing(6),
       padding: theme.spacing(3)
     }
-  },
-  stepper: {
-    padding: theme.spacing(3, 0, 5)
   },
   buttons: {
     display: "flex",
@@ -167,25 +156,12 @@ const CloudForm: React.FC<Props> = ({ sendData }) => {
 
   return (
     <>
-      <AppBar position="absolute" color="default" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Cloud 9
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
             Checkout
           </Typography>
-          <Stepper activeStep={activeStep} className={classes.stepper}>
-            {formSteps.map(({ label }) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
+          <FormStepper activeStep={activeStep} steps={formSteps} />
           <Formik
             validationSchema={formSteps[activeStep].schema}
             initialValues={initialValues}
