@@ -1,40 +1,15 @@
-/* eslint-disable react/jsx-no-undef */
 import React, { useState } from "react";
 import * as yup from "yup";
 import { makeStyles } from "@material-ui/core/styles";
 import { Formik, Form } from "formik";
 import { SubscriptionPage } from "Pages/SubscriptionPage";
-// import { Debugger } from "Debugger";
 import { UserDataPage } from "Pages/UserDataPage";
 import { CreditDataPage } from "Pages/CreditDataPage";
-import { Typography, Paper, Button } from "@material-ui/core";
+import { Typography, Button } from "@material-ui/core";
 import { ConfirmationPage } from "Pages/ConfirmationPage";
 import { FormStepper } from "FormStepper";
 
 const useStyles = makeStyles(theme => ({
-  appBar: {
-    position: "relative"
-  },
-  layout: {
-    width: "auto",
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 600,
-      marginLeft: "auto",
-      marginRight: "auto"
-    }
-  },
-  paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3)
-    }
-  },
   buttons: {
     display: "flex",
     justifyContent: "flex-end"
@@ -156,53 +131,49 @@ const CloudForm: React.FC<Props> = ({ sendData }) => {
 
   return (
     <>
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
-            Checkout
-          </Typography>
-          <FormStepper activeStep={activeStep} steps={formSteps} />
-          <Formik
-            validationSchema={formSteps[activeStep].schema}
-            initialValues={initialValues}
-            onSubmit={values => {
-              if (activeStep < 3) {
-                setActiveStep(prevStep => clamp(prevStep + 1, 0, 3));
-              } else {
-                const data = sendData(values);
-                console.log(data);
-              }
-            }}
-          >
-            {({ values: { terms } }) => (
-              <Form>
-                {getStepContent(activeStep)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button
-                      onClick={() =>
-                        setActiveStep(prevStep => clamp(prevStep - 1, 0, 3))
-                      }
-                      className={classes.button}
-                    >
-                      Back
-                    </Button>
-                  )}
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    disabled={activeStep === 3 && !terms}
-                  >
-                    {activeStep === 3 ? "Place order" : "Next"}
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </Paper>
-      </main>
+      <Typography component="h1" variant="h4" align="center">
+        Checkout
+      </Typography>
+      <FormStepper activeStep={activeStep} steps={formSteps} />
+      <Formik
+        validationSchema={formSteps[activeStep].schema}
+        initialValues={initialValues}
+        onSubmit={values => {
+          if (activeStep < 3) {
+            setActiveStep(prevStep => clamp(prevStep + 1, 0, 3));
+          } else {
+            const data = sendData(values);
+            console.log(data);
+          }
+        }}
+      >
+        {({ values: { terms } }) => (
+          <Form>
+            {getStepContent(activeStep)}
+            <div className={classes.buttons}>
+              {activeStep !== 0 && (
+                <Button
+                  onClick={() =>
+                    setActiveStep(prevStep => clamp(prevStep - 1, 0, 3))
+                  }
+                  className={classes.button}
+                >
+                  Back
+                </Button>
+              )}
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                disabled={activeStep === 3 && !terms}
+              >
+                {activeStep === 3 ? "Place order" : "Next"}
+              </Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </>
   );
 };
