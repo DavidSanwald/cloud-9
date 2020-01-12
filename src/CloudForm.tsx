@@ -127,7 +127,8 @@ type Props = {
 
 const CloudForm: React.FC<Props> = ({ sendData }) => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState<number>(0);
+  const [didSubmit, setDidSubmit] = useState(false);
 
   return (
     <>
@@ -138,39 +139,46 @@ const CloudForm: React.FC<Props> = ({ sendData }) => {
       <Formik
         validationSchema={formSteps[activeStep].schema}
         initialValues={initialValues}
-        onSubmit={values => {
+        onSubmit={(values, { setSubmitting }) => {
           if (activeStep < 3) {
             setActiveStep(prevStep => clamp(prevStep + 1, 0, 3));
+            setSubmitting(false);
           } else {
-            const data = sendData(values);
-            console.log(data);
+            const data = sendData(values).then(() => {
+              setSubmitting(false);
+              setDidSubmit(true);
+            });
           }
         }}
       >
-        {({ values: { terms } }) => (
+        {({ isSubmitting, values: { terms } }) => (
           <Form>
             {getStepContent(activeStep)}
-            <div className={classes.buttons}>
-              {activeStep !== 0 && (
+            {didSubmit ? (
+              <Typography>Order Placed</Typography>
+            ) : (
+              <div className={classes.buttons}>
+                {activeStep !== 0 && (
+                  <Button
+                    onClick={() =>
+                      setActiveStep(prevStep => clamp(prevStep - 1, 0, 3))
+                    }
+                    className={classes.button}
+                  >
+                    Back
+                  </Button>
+                )}
                 <Button
-                  onClick={() =>
-                    setActiveStep(prevStep => clamp(prevStep - 1, 0, 3))
-                  }
+                  type="submit"
+                  variant="contained"
+                  color="primary"
                   className={classes.button}
+                  disabled={(activeStep === 3 && !terms) || isSubmitting}
                 >
-                  Back
+                  {activeStep === 3 ? "Place order" : "Next"}
                 </Button>
-              )}
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                disabled={activeStep === 3 && !terms}
-              >
-                {activeStep === 3 ? "Place order" : "Next"}
-              </Button>
-            </div>
+              </div>
+            )}
           </Form>
         )}
       </Formik>
