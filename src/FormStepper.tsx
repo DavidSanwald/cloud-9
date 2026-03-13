@@ -20,15 +20,13 @@ const FormStepper: React.FC<Props> = ({ activeStep, steps }) => {
   const classes = useStyles();
 
   return (
-    <>
-      <Stepper activeStep={activeStep} className={classes.stepper}>
-        {steps.map(({ label }) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-    </>
+    <Stepper activeStep={activeStep} className={classes.stepper}>
+      {steps.map(({ label }) => (
+        <Step key={label}>
+          <StepLabel>{label}</StepLabel>
+        </Step>
+      ))}
+    </Stepper>
   );
 };
 

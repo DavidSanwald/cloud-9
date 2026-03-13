@@ -23,20 +23,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const addresses = [
-  "1 Material-UI Drive",
-  "Reactville",
-  "Anytown",
-  "99999",
-  "USA"
-];
-const payments = [
-  { name: "Card type", detail: "Visa" },
-  { name: "Card holder", detail: "Mr John Smith" },
-  { name: "Card number", detail: "xxxx-xxxx-xxxx-1234" },
-  { name: "Expiry date", detail: "04/2024" }
-];
-
 const monthlyStoragePriceGB = 2;
 
 const ConfirmationPage: React.FC = () => {
@@ -60,7 +46,7 @@ const ConfirmationPage: React.FC = () => {
           ...rest
         }) => {
           const price = duration * amount * monthlyStoragePriceGB;
-          const discount = upfront ? price / 10 : 0;
+          const discount = upfront ? price * 0.12 : 0;
           const priceDiscounted = price - discount;
           return (
             <>
@@ -68,21 +54,21 @@ const ConfirmationPage: React.FC = () => {
                 Subscription Details
               </Typography>
               <List disablePadding>
-                <ListItem className={classes.listItem} key={duration}>
+                <ListItem className={classes.listItem} key="duration">
                   <ListItemText
                     primary="Duration"
                     secondary="Choosen subscription period in months"
                   />
                   <Typography variant="body2">{duration} months</Typography>
                 </ListItem>
-                <ListItem className={classes.listItem} key={amount}>
+                <ListItem className={classes.listItem} key="amount">
                   <ListItemText
                     primary="Capacity"
                     secondary="Choosen storage capacity in gb"
                   />
                   <Typography variant="body2">{amount} GB</Typography>
                 </ListItem>
-                <ListItem className={classes.listItem} key={upfront}>
+                <ListItem className={classes.listItem} key="upfront">
                   <ListItemText
                     primary="Upfront payment discount"
                     secondary="Discount for upfront payment"

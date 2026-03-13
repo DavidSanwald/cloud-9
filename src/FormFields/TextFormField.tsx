@@ -9,7 +9,6 @@ export const TextFormField: React.FC<FieldProps> = ({
 }) => {
   const errorText =
     getIn(form.touched, field.name) && getIn(form.errors, field.name);
-  const value = getIn(form.values, field.name);
   return (
     <TextField
       fullWidth
@@ -18,7 +17,7 @@ export const TextFormField: React.FC<FieldProps> = ({
       error={!!errorText}
       {...field}
       {...props}
-      value={value || ""}
+      value={field.value ?? ""}
     />
   );
 };

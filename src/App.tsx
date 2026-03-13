@@ -48,7 +48,7 @@ const App: React.FC = () => {
       </AppBar>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-          <CloudForm sendData={postData} />;
+          <CloudForm sendData={postData} />
         </Paper>
       </main>
     </>

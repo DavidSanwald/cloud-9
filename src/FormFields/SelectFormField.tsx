@@ -11,7 +11,7 @@ import {
 export const SelectFormField: React.FC<
   FieldProps & {
     label?: string;
-    options: Array<{ label: string; value: string }>;
+    options: Array<{ label: string; value: string | number }>;
   }
 > = ({ field, form, label, options, ...props }) => {
   const errorText =

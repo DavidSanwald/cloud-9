@@ -122,13 +122,14 @@ function clamp(num: number, lower: number, upper: number) {
 }
 
 type Props = {
-  sendData: Function;
+  sendData: (data: typeof initialValues) => Promise<any>;
 };
 
 const CloudForm: React.FC<Props> = ({ sendData }) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState<number>(0);
   const [didSubmit, setDidSubmit] = useState(false);
+  const lastStep = formSteps.length - 1;
 
   return (
     <>
@@ -140,11 +141,11 @@ const CloudForm: React.FC<Props> = ({ sendData }) => {
         validationSchema={formSteps[activeStep].schema}
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting }) => {
-          if (activeStep < 3) {
-            setActiveStep(prevStep => clamp(prevStep + 1, 0, 3));
+          if (activeStep < lastStep) {
+            setActiveStep(prevStep => clamp(prevStep + 1, 0, lastStep));
             setSubmitting(false);
           } else {
-            const data = sendData(values).then(() => {
+            sendData(values).then(() => {
               setSubmitting(false);
               setDidSubmit(true);
             });
@@ -161,7 +162,7 @@ const CloudForm: React.FC<Props> = ({ sendData }) => {
                 {activeStep !== 0 && (
                   <Button
                     onClick={() =>
-                      setActiveStep(prevStep => clamp(prevStep - 1, 0, 3))
+                      setActiveStep(prevStep => clamp(prevStep - 1, 0, lastStep))
                     }
                     className={classes.button}
                   >
@@ -173,9 +174,9 @@ const CloudForm: React.FC<Props> = ({ sendData }) => {
                   variant="contained"
                   color="primary"
                   className={classes.button}
-                  disabled={(activeStep === 3 && !terms) || isSubmitting}
+                  disabled={(activeStep === lastStep && !terms) || isSubmitting}
                 >
-                  {activeStep === 3 ? "Place order" : "Next"}
+                  {activeStep === lastStep ? "Place order" : "Next"}
                 </Button>
               </div>
             )}
